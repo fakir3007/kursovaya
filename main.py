@@ -2,6 +2,8 @@ import os
 import requests
 import datetime
 
+from urllib3.util import url
+
 
 def get_token_id(file_name):
      with open(os.path.join(os.getcwd(), file_name), 'r') as token_file:
@@ -60,7 +62,7 @@ class VK_requests:
 
 
 class Yandex:
-    def __init__(self, folder, token_list):
+    def __init__(self, folder, token_list, folder_name=None):
         self.token = token_list[0]
         self.url = "https://cloud-api.yandex.net/v1/disk/resources/upload"
         self.headers = {'Authorization': self.token}
@@ -104,12 +106,18 @@ def create_copy(self, dict_files):
     print(f'\nЗапрос завершен, новых файлов добавлено: {added_files_num}')
 
 
-tokenVK = 'tokenya.txt'  # токен и id доступа хранятся в файле
+tokenVK = 'tokkenya.txt'  # токен и id доступа хранятся в файле
 tokenYandex = 'tokenvk.txt'  # хранится только токен яндекс диска
 
-my_VK = VK_request(get_token_id(tokenVK))
+
+
+
+my_VK = VK_request(get_token_id(tokenvk))
 print(my_VK.json)
 
 my_yandex = Yandex('VK photo copies', get_token_id(tokenYandex))
 my_yandex.create_copy(my_VK.export_dict)
+
+
+
 
